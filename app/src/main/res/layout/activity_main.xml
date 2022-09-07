@@ -50,7 +50,6 @@
         android:id="@+id/tab_layout"
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
-        app:tabIconTint="@color/selected_color"
         app:tabIndicatorColor="@color/purple_500"
         android:layout_height="wrap_content"
         app:tabTextAppearance="@style/MineCustomTabText"
