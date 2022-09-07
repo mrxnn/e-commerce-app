@@ -9,14 +9,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class LoginActivity extends AppCompatActivity {
-    TextView registerLink;
-    Button loginButton;
+public class RegisterActivity extends AppCompatActivity {
+    TextView loginLink;
+    Button registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
         // hide action bar
         if (getSupportActionBar() != null)
@@ -25,21 +25,21 @@ public class LoginActivity extends AppCompatActivity {
         // hide status bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        // register link click
-        registerLink = findViewById(R.id.register_link);
-        registerLink.setOnClickListener(new View.OnClickListener() {
+        // login link click
+        loginLink = findViewById(R.id.login_link);
+        loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
 
-        // login button click
-        loginButton = findViewById(R.id.login_button);
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        // register button click
+        registerButton = findViewById(R.id.register_button);
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
     }
