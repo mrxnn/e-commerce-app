@@ -48,24 +48,27 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
-        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
-        app:tabIndicatorColor="@color/purple_500"
         android:layout_height="wrap_content"
-        app:tabTextAppearance="@style/MineCustomTabText"
-        android:layout_below="@+id/heading">
+        android:layout_below="@+id/heading"
+        android:layout_marginTop="8dp"
+        app:tabIndicatorColor="@color/primary"
+        app:tabTextAppearance="@style/MineCustomTabText">
+
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="explore" />
+
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="cart"/>
+            android:text="cart" />
+
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="wishlist"/>
+            android:text="wishlist" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
@@ -85,8 +88,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginBottom="32dp"
         android:clickable="true"
-        app:tint="@color/white"
-        app:backgroundTint="@color/black"
-        app:srcCompat="@drawable/ic_baseline_add_24" />
+        app:srcCompat="@drawable/ic_baseline_add_24"
+        app:tint="@color/white" />
 
 </RelativeLayout>
