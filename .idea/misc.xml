@@ -3,8 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.231722958529286" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22878851836217814" />
+        <entry key="..\:/Github/Android/E-Commerce-App/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/Github/Android/E-Commerce-App/app/src/main/res/layout/activity_main.xml" value="0.31765711842667804" />
+        <entry key="..\:/Github/Android/E-Commerce-App/app/src/main/res/layout/activity_product_form.xml" value="0.31765711842667804" />
+        <entry key="..\:/Github/Android/E-Commerce-App/app/src/main/res/layout/activity_register.xml" value="0.31765711842667804" />
+        <entry key="..\:/Github/Android/E-Commerce-App/app/src/main/res/layout/activity_splash.xml" value="0.31765711842667804" />
+        <entry key="..\:/Github/Android/E-Commerce-App/app/src/main/res/layout/fragment_cart.xml" value="0.31765711842667804" />
+        <entry key="..\:/Github/Android/E-Commerce-App/app/src/main/res/layout/fragment_explore.xml" value="0.31765711842667804" />
+        <entry key="..\:/Github/Android/E-Commerce-App/app/src/main/res/layout/fragment_wishlist.xml" value="0.31765711842667804" />
+        <entry key="..\:/Github/Android/E-Commerce-App/app/src/main/res/layout/product_view.xml" value="0.31765711842667804" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.2201795639162035" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.231722958529286" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.2201795639162035" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.231722958529286" />
         <entry key="app/src/main/res/layout/fragment_cart.xml" value="0.231722958529286" />
