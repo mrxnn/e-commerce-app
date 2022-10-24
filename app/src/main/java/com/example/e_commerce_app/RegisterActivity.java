@@ -51,12 +51,12 @@ public class RegisterActivity extends AppCompatActivity {
         confirmPasswordInput = findViewById(R.id.confirmPasswordInputEditText);
 
         // attach event handlers
-        loginLink.setOnClickListener((view -> loginToAccount()));
+        loginLink.setOnClickListener((view -> navigateToLogin()));
         registerButton.setOnClickListener((view) -> registerAccount());
         submitButton.setOnClickListener(view -> registerAccount());
     }
 
-    void loginToAccount() {
+    void navigateToLogin() {
         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
     }
 
@@ -94,6 +94,8 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void unused) {
                             Toast.makeText(RegisterActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                            firebaseAuth.signOut();
+                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
