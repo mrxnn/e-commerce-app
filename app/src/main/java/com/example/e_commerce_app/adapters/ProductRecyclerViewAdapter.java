@@ -13,10 +13,12 @@ import com.example.e_commerce_app.R;
 import com.example.e_commerce_app.models.Product;
 import com.squareup.picasso.Picasso;
 
-public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecyclerViewAdapter.ProductViewHolder> {
-    Product[] products;
+import java.util.ArrayList;
 
-    public ProductRecyclerViewAdapter(Product[] products) {
+public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecyclerViewAdapter.ProductViewHolder> {
+    ArrayList<Product> products;
+
+    public ProductRecyclerViewAdapter(ArrayList<Product> products) {
         this.products = products;
     }
 
@@ -28,14 +30,14 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product p = products[position];
+        Product p = products.get(position);
         holder.textView.setText(p.getTitle());
         Picasso.get().load(p.getImageURL()).into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return products.length;
+        return products.size();
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder {
