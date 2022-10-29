@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import com.squareup.picasso.Picasso;
 public class ProductFormActivity extends AppCompatActivity {
     Button createButton;
     Button pickImageButton;
+    ImageButton backButton;
     TextInputEditText titleInput;
     TextInputEditText descriptionInput;
     TextInputEditText priceInput;
@@ -53,12 +55,20 @@ public class ProductFormActivity extends AppCompatActivity {
 
         createButton = findViewById(R.id.create_button);
         pickImageButton = findViewById(R.id.pickImageButton);
+        backButton = findViewById(R.id.backButton);
         titleInput = findViewById(R.id.titleInputEditText);
         descriptionInput = findViewById(R.id.descriptionInputEditText);
         priceInput = findViewById(R.id.priceInputEditText);
         imageInput = findViewById(R.id.imageInputEditText);
         firebaseFirestore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ProductFormActivity.this, MainActivity.class));
+            }
+        });
 
         pickImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,9 +118,6 @@ public class ProductFormActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(ProductFormActivity.this, "No file selected", Toast.LENGTH_LONG).show();
                 }
-
-
-
             }
         });
     }
@@ -119,24 +126,6 @@ public class ProductFormActivity extends AppCompatActivity {
         ContentResolver cr = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cr.getType(uri));
-    }
-
-    private void uploadFile() {
-        if (imageUri != null) {
-            StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
-            fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(ProductFormActivity.this, "Failed to upload file", Toast.LENGTH_LONG).show();
-                }
-            });
-        } else {
-            Toast.makeText(this, "No file selected", Toast.LENGTH_LONG).show();
-        }
     }
 
     private void openFileChooser() {
