@@ -1,5 +1,6 @@
 package com.example.e_commerce_app.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.e_commerce_app.LoginActivity;
+import com.example.e_commerce_app.MainActivity;
 import com.example.e_commerce_app.R;
 import com.example.e_commerce_app.models.Product;
 import com.squareup.picasso.Picasso;
@@ -25,7 +28,8 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ProductViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.product_view, parent, false));
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_view, parent, false);
+        return new ProductViewHolder(view);
     }
 
     @Override

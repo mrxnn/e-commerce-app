@@ -1,6 +1,7 @@
 package com.example.e_commerce_app.models;
 
 public class Product {
+    private String id;
     private String title;
     private String description;
     private double price;
@@ -12,6 +13,10 @@ public class Product {
         this.price = price;
         this.imageURL = imageURL;
     }
+
+    public void setId(String id) { this.id = id; }
+
+    public String getId() { return  this.id; }
 
     public String getTitle() {
         return title;

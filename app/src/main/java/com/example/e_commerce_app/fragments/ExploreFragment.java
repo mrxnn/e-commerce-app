@@ -1,5 +1,6 @@
 package com.example.e_commerce_app.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,8 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.e_commerce_app.LoginActivity;
+import com.example.e_commerce_app.MainActivity;
+import com.example.e_commerce_app.ProductActivity;
 import com.example.e_commerce_app.R;
 import com.example.e_commerce_app.adapters.ProductRecyclerViewAdapter;
+import com.example.e_commerce_app.adapters.RecyclerItemClickListener;
 import com.example.e_commerce_app.models.Product;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,6 +41,23 @@ public class ExploreFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
         recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                         Intent intent = new Intent(getContext(), ProductActivity.class);
+                         intent.putExtra("id", products.get(position).getId());
+                         intent.putExtra("title", products.get(position).getTitle());
+                         intent.putExtra("description", products.get(position).getDescription());
+                         intent.putExtra("price", products.get(position).getPrice());
+                         intent.putExtra("imageURL", products.get(position).getImageURL());
+                         startActivity(intent);
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                    }
+                })
+        );
+
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         ProductRecyclerViewAdapter adapter = new ProductRecyclerViewAdapter(products);
         recyclerView.setAdapter(adapter);
@@ -46,12 +68,15 @@ public class ExploreFragment extends Fragment {
                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                 List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                                 for (DocumentSnapshot d : list) {
+                                    String id = d.getId();
                                     String title = d.get("title").toString();
                                     String description = d.get("description").toString();
                                     Double price = Double.parseDouble(d.get("price").toString());
                                     String imageURL = d.get("imageURL").toString();
 
-                                    products.add(new Product(title, description, price, imageURL));
+                                    Product product = new Product(title, description, price, imageURL);
+                                    product.setId(id);
+                                    products.add(product);
                                 }
 
                                 adapter.notifyDataSetChanged();
