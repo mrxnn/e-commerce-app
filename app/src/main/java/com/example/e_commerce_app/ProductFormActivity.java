@@ -15,13 +15,6 @@ public class ProductFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_form);
 
-        createButton = findViewById(R.id.create_button);
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ProductFormActivity.this, MainActivity.class));
-                finish();
-            }
-        });
+//        createButton = findViewById(R.id.create_button);
     }
 }
