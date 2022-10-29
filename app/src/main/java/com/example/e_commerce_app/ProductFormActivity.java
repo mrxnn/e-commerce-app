@@ -3,22 +3,28 @@ package com.example.e_commerce_app;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.e_commerce_app.models.Product;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class ProductFormActivity extends AppCompatActivity {
@@ -29,6 +35,7 @@ public class ProductFormActivity extends AppCompatActivity {
     TextInputEditText priceInput;
     TextInputEditText imageInput;
     FirebaseFirestore firebaseFirestore;
+    StorageReference storageReference;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
 
@@ -51,6 +58,7 @@ public class ProductFormActivity extends AppCompatActivity {
         priceInput = findViewById(R.id.priceInputEditText);
         imageInput = findViewById(R.id.imageInputEditText);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         pickImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,23 +70,73 @@ public class ProductFormActivity extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title = titleInput.getText().toString();
-                String description = descriptionInput.getText().toString();
-                int price = Integer.parseInt( priceInput.getText().toString());
-                Product product = new Product(title, description, price, "");
+                // Upload image
+                if (imageUri != null) {
+                    StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+                    fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String title = titleInput.getText().toString();
+                                    String description = descriptionInput.getText().toString();
+                                    int price = Integer.parseInt( priceInput.getText().toString());
+                                    Product product = new Product(title, description, price, uri.toString());
 
-                DocumentReference documentReference = firebaseFirestore.collection("products").document();
-                documentReference.set(product).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(ProductFormActivity.this, "Successfully Added", Toast.LENGTH_LONG).show();
-                        titleInput.setText("");
-                        descriptionInput.setText("");
-                        priceInput.setText("");
-                    }
-                });
+                                    // Add product to database
+                                    DocumentReference documentReference = firebaseFirestore.collection("products").document();
+                                    documentReference.set(product).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Toast.makeText(ProductFormActivity.this, "Successfully Added", Toast.LENGTH_LONG).show();
+                                            titleInput.setText("");
+                                            descriptionInput.setText("");
+                                            priceInput.setText("");
+                                            imageInput.setText("");
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ProductFormActivity.this, "Failed to upload file", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(ProductFormActivity.this, "No file selected", Toast.LENGTH_LONG).show();
+                }
+
+
+
             }
         });
+    }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver cr = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(uri));
+    }
+
+    private void uploadFile() {
+        if (imageUri != null) {
+            StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+            fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(ProductFormActivity.this, "Failed to upload file", Toast.LENGTH_LONG).show();
+                }
+            });
+        } else {
+            Toast.makeText(this, "No file selected", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void openFileChooser() {
@@ -94,7 +152,6 @@ public class ProductFormActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             imageInput.setText(data.getData().getPath());
-//            Picasso.get().load(imageUri).into(imageView);
         }
     }
 }
