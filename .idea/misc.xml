@@ -3,9 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/rounded_button.xml" value="0.1935" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.231722958529286" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22878851836217814" />
-        <entry key="app/src/main/res/layout/activity_product_form.xml" value="0.27724852380512005" />
+        <entry key="app/src/main/res/layout/activity_product_form.xml" value="0.29585292860196666" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.2201795639162035" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.231722958529286" />
         <entry key="app/src/main/res/layout/fragment_cart.xml" value="0.231722958529286" />
@@ -20,5 +21,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.7212029915785576" />
+      </ProjectState>
+    </option>
   </component>
 </project>
